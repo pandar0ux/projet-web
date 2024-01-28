@@ -17,7 +17,7 @@ class MemoController extends Controller
 		$memo->content = $request->content;
 		$memo->owner = $request->user->login;
 		$memo->status = $request->memostatus;
-		$memo->publication = date("d/m/y H:i",time());
+		$memo->publication = date(now());
 		$memo->modification = date(now());
 		$memo->save();
 
@@ -41,7 +41,7 @@ class MemoController extends Controller
 		$memos = Memo::where('id', $request->id)->get();
 		return view('modification', ['memos'=>$memos]);
 	}
-	public function memo_modif(Request$request)
+	public function memo_modification(Request$request)
 	{
 		if (!$request->filled(['title', 'content', 'memostatus']))
 			return to_route('view_modif')->with('message', "Some POST data are missing.");
@@ -50,9 +50,22 @@ class MemoController extends Controller
 		$memos->title = $request->title;
 		$memos->content = $request->content;
 		$memos->status = $request->memostatus;
-		$memos->modification = date(now());
+		$memos->modification = now();
 		$memos->save();
-		return to_route('view_account')->with('message',"New memo modified.");
+		return redirect()->route('view_account')->with('message',"New memo modified.");
+	}
+	public function change_state(Request $request)
+	{
+		$memos = Memo::where('id', $request->id)->get();
+		if ($memos->status == 'public'){
+			$memos->status = 'private';
+			return redirect()->route('view_modif')->with('message',"memo privatize.");
+		}
+		else{
+			$memos->status = 'public';
+			$memos->publication = now();
+			return redirect()->route('view_modif')->with('message',"memo published.");
+		}
 	}
 	public function delete(Request $request){
 			if ( !$request->owner )
