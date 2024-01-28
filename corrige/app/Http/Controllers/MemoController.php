@@ -49,22 +49,23 @@ class MemoController extends Controller
 		$memos = Memo::find($request->id);
 		$memos->title = $request->title;
 		$memos->content = $request->content;
-		$memos->status = $request->memostatus;
 		$memos->modification = now();
 		$memos->save();
 		return redirect()->route('view_account')->with('message',"New memo modified.");
 	}
 	public function change_state(Request $request)
 	{
-		$memos = Memo::where('id', $request->id)->get();
+		$memos = Memo::find($request->id);
 		if ($memos->status == 'public'){
 			$memos->status = 'private';
-			return redirect()->route('view_modif')->with('message',"memo privatize.");
+			$memos->save();
+			return redirect()->route('memo_show')->with('message',"memo privatize.");
 		}
 		else{
 			$memos->status = 'public';
 			$memos->publication = now();
-			return redirect()->route('view_modif')->with('message',"memo published.");
+			$memos->save();
+			return redirect()->route('memo_show')->with('message',"memo published.");
 		}
 	}
 	public function delete(Request $request){
