@@ -16,6 +16,12 @@
 				<input type="hidden" id="id" name="id" value="{{$memo->id}}">
 				<input type="submit" value="Privatiser/Publier">
 			</form>
+			<form action="{{ route('delete_memo', ['id' => $memo->id]) }}" method="POST">
+				@csrf
+				<input type="hidden" id="id" name="id" value="{{$memo->id}}">
+				<input type="hidden" id="owner" name="owner" value="{{$memo->owner}}">
+				<input type="submit" value="supprimer le memo">
+			</form>
 		</section>
 		<hr>
 	@empty

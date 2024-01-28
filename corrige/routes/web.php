@@ -41,5 +41,6 @@ Route::prefix('admin')->middleware('auth.myuser')->group(function () {
 		route::get('/modification', [MemoController::class, 'modif'])->name('view_modif');
 		Route::post('/modifmemo', [MemoController::class,'memo_modification'])->name('memo_modif');
 		Route::post('/changestate',[MemoController::class, 'change_state'])->name('change');
+		Route::post('/deletmemo', [MemoController::class, 'delete'])->name('delete_memo');
 	});
 });

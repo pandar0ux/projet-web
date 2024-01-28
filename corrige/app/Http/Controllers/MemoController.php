@@ -71,9 +71,9 @@ class MemoController extends Controller
 	public function delete(Request $request){
 			if ( !$request->owner )
 				return to_route('view_signin');
-
+			$memos = Memo::find($request->id);
 			try {
-				$request->memos->delete();
+				$memos->delete();
 			}
 			catch (\Exception $e) {
 				return to_route('view_account')->with('message',$e->getMessage());
