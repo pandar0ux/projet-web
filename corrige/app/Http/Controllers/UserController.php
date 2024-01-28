@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Memo;
 use Illuminate\Http\Request;
 
 use App\Models\MyUser;
@@ -80,14 +81,18 @@ class UserController extends Controller
 	public function delete(Request $request) {
 		if ( !$request->user )
 			return to_route('view_signin');
-
+		$memos = Memo::all();
+		foreach ($memos as $memo){
+			if ($memo->owner == $request->user){
+				$memo->delete();
+			}
+		}
 		try {
 			$request->user->delete();
 		}
 		catch (\Exception $e) {
 			return to_route('view_account')->with('message',$e->getMessage());
 		}
-		//foreach ($request->user as memos->owner)
 
 		$request->session()->flush();
 

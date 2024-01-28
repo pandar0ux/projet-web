@@ -43,7 +43,7 @@ class MemoController extends Controller
 	}
 	public function memo_modification(Request$request)
 	{
-		if (!$request->filled(['title', 'content', 'memostatus']))
+		if (!$request->filled(['title', 'content']))
 			return to_route('view_modif')->with('message', "Some POST data are missing.");
 
 		$memos = Memo::find($request->id);
@@ -80,8 +80,4 @@ class MemoController extends Controller
 			}
 		return to_route('view_account')->with('message',"memos successfully deleted.");
 	}
-	/*public function deleteUser(Request $request)
-	{
-		foreach ($request->user as )
-	}*/
 }

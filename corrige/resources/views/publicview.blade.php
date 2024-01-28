@@ -1,6 +1,6 @@
 @extends('layouts.mainLayout')
 
-@section('title','Account')
+@section('title','vue publique')
 
 @section('content')
 	<p>

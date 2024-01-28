@@ -1,0 +1,12 @@
+
+body{
+	border: #000000;
+}
+h1{
+	display : flex;
+	justify-content: center;
+}
+label{
+	display : flex;
+	justify-content: center;
+}
